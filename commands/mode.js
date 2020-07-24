@@ -1,11 +1,5 @@
 var mysql = require("mysql");
-const db_config = {
-  host: "localhost",
-  user: "theya",
-  password: "Mot2Passe!",
-  database: "osubot",
-  connectTimeout: 90000000,
-};
+const { db_config } = require('../config.json')
 var connection;
 
 function handleDisconnect() {
