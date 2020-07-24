@@ -76,4 +76,4 @@ message.guild.fetch
   }
 });
 
-client.login(tokenTest);
+client.login(token);

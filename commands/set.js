@@ -4,7 +4,7 @@ const { tetrioToken } = require("../config.json");const config = {
 };
 
 var mysql = require("mysql");
-const db_config = require('../config.json')
+const { db_config } = require('../config.json')
 var connection;
 
 function handleDisconnect() {
