@@ -18,7 +18,7 @@
 > Because why not.
 
 # Additional informations
-> I made this bot just for fun and for learning purposes, at the start I wanted to keep this for myself but some people wanted it so I made it public. <br> If you have any recommendations or features request please pm me at Theya#9179 :smile:
+> I made this bot just for fun and for learning purposes, at the start I wanted to keep this for myself but some people wanted it so I made it public. <br> If you have any recommendations or features request feel free to pm me at Theya#9179 :smile: <br> The bot should be running 24h/24 but my server sometimes goes down. The bot may sometime be offline.
 
 # Some screenshots 
 <img src="https://i.imgur.com/d2o55nC.png"></img>
