@@ -20,4 +20,9 @@
 # How would this improve experience?
 > It won't.
 
+# Some screenshots 
+<img src="https://i.imgur.com/d2o55nC.png"></img>
+<img src="https://i.imgur.com/KN1lQxF.png"></img>
+<img src="https://i.imgur.com/Vh9pyZk.png"></img>
+
 
