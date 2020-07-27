@@ -59,7 +59,19 @@ module.exports = {
         getProfile(res.id, "id", message);
       });
     } else {
-      getProfile(args[0].toLowerCase(), "username", message);
+      if (args[0].startsWith("<@") && args[0].endsWith(">")) {
+        let id = args[0].slice(2, -1);
+        if (id.startsWith("!")) {
+          id = id.slice(1);
+        }
+        fetchId(id, function (res) {
+          if (res == null)
+            return message.reply(
+              "the user didn't set his TETR.IO username. `(%help set)`"
+            );
+          getProfile(res.id, "id", message);
+        });
+      } else getProfile(args[0].toLowerCase(), "username", message);
     }
   },
 };

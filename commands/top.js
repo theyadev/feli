@@ -4,7 +4,7 @@ const getUser = require("../functions/cache").user;
 const fetchId = require("../functions/cache").id;
 const getReplay = require("../functions/cache").replay;
 const getColor = require("../functions/details").color;
-const msToTime = require('../functions/details.js').msToTime
+const msToTime = require("../functions/details.js").msToTime;
 
 function pad(n, width, z) {
   z = z || "0";
@@ -71,7 +71,7 @@ async function getTopRecords(name, type, message) {
     let sprintRank;
     if (res.records.sprintRank) sprintRank = res.records.sprintRank;
     let blitzRank;
-    if (res.records.blitzRank) blitzRank = res.records.blitzRank
+    if (res.records.blitzRank) blitzRank = res.records.blitzRank;
     let sprintRankB = sprintRank ? " **(#" + sprintRank + ")**" : "";
     let blitzRankB = blitzRank ? " **(#" + blitzRank + ")**" : "";
     let sprintValue = `**▸ Time:** ${msToTime(
@@ -126,7 +126,19 @@ module.exports = {
         getTopRecords(res.id, "id", message);
       });
     } else {
-      getTopRecords(args[0].toLowerCase(), "username", message);
+      if (args[0].startsWith("<@") && args[0].endsWith(">")) {
+        let id = args[0].slice(2, -1);
+        if (id.startsWith("!")) {
+          id = id.slice(1);
+        }
+        fetchId(id, function (res) {
+          if (res == null)
+            return message.reply(
+              "please set your TETR.IO username. `(%help set)`"
+            );
+          getTopRecords(res.id, "id", message);
+        });
+      } else getTopRecords(args[0].toLowerCase(), "username", message);
     }
   },
 };

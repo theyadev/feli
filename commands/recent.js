@@ -24,7 +24,6 @@ function finesse(pP, pieces) {
 }
 
 async function getRecentRecords(name, type, message, gameType) {
-  console.log(name, type, gameType);
   getUser(name, type, async function (user) {
     getUserRecent(name, type, async function (res) {
       let recent;
@@ -83,8 +82,8 @@ module.exports = {
   options:
     "**Criterias:**\nUsername: TETR.IO username of the player.\nBLITZ `(-b)`: Get user most recent blitz play.\nSprint `(-s)`: Get user most recent sprint play.\n",
   execute(message, args) {
-    function fetch(gameType) {
-      fetchId(message.author.id, function (res) {
+    function fetch(id, gameType) {
+      fetchId(id, function (res) {
         if (res == null)
           return message.reply(
             "please set your TETR.IO username. `(%help set)`"
@@ -94,7 +93,7 @@ module.exports = {
     }
 
     if (args.length == 0) {
-      fetch(0);
+      fetch(message.author.id, 0);
     } else {
       let gameType = 0;
       let user = 0;
@@ -108,7 +107,13 @@ module.exports = {
         }
       });
       if (user == 0) fetch(gameType);
-      else getRecentRecords(user, "username", message, gameType);
+      if (user.startsWith("<@") && user.endsWith(">")) {
+        let id = user.slice(2, -1);
+        if (id.startsWith("!")) {
+          id = id.slice(1);
+        }
+        fetch(id, gameType);
+      } else getRecentRecords(user, "username", message, gameType);
     }
   },
 };
