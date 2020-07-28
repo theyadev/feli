@@ -60,8 +60,12 @@ function getDate(date) {
 async function getTopRecords(name, type, message) {
   getUser(name, type, async function (res) {
     if (res == null) return message.reply("user not found.");
-    const blitzShortId = await getReplay(res.records.blitz.replayId);
-    const sprintShortId = await getReplay(res.records.sprint.replayId);
+    let blitzShortId = null;
+    let sprintShortId = null;
+    if (res.records.blitz != null)
+      blitzShortId = await getReplay(res.records.blitz.replayId);
+    if (res.records.sprint != null)
+      sprintShortId = await getReplay(res.records.sprint.replayId);
 
     let color = getColor(res.tetraLeague.rank).toString();
     let authorFlag = "";
@@ -74,24 +78,31 @@ async function getTopRecords(name, type, message) {
     if (res.records.blitzRank) blitzRank = res.records.blitzRank;
     let sprintRankB = sprintRank ? " **(#" + sprintRank + ")**" : "";
     let blitzRankB = blitzRank ? " **(#" + blitzRank + ")**" : "";
-    let sprintValue = `**▸ Time:** ${msToTime(
-      res.records.sprint.finalTime
-    )} ${sprintRankB}\n**▸ PPS:** ${
-      Math.round(
-        (res.records.sprint.endcontext.piecesPlaced /
-          (res.records.sprint.finalTime / 1000)) *
-          100
-      ) / 100
-    }\n**▸ Replay Link:**  : https://tetr.io/#R:${sprintShortId}\n*${getDate(
-      new Date(res.records.sprint.date)
-    )}*`;
-    let blitzValue = `**▸ Score:** ${
-      res.records.blitz.score
-    } ${blitzRankB}\n**▸ PPS:** ${
-      Math.round((res.records.blitz.endcontext.piecesPlaced / 120) * 100) / 100
-    }\n**▸ Replay Link:**  : https://tetr.io/#R:${blitzShortId}\n*${getDate(
-      new Date(res.records.blitz.date)
-    )}*`;
+    let sprintValue = null;
+    if (res.records && res.records.sprint) {
+      sprintValue = `**▸ Time:** ${msToTime(
+        res.records.sprint.finalTime
+      )} ${sprintRankB}\n**▸ PPS:** ${
+        Math.round(
+          (res.records.sprint.endcontext.piecesPlaced /
+            (res.records.sprint.finalTime / 1000)) *
+            100
+        ) / 100
+      }\n**▸ Replay Link:**  : https://tetr.io/#R:${sprintShortId}\n*${getDate(
+        new Date(res.records.sprint.date)
+      )}*`;
+    }
+    let blitzValue = null;
+    if (res.records && res.records.blitz) {
+      blitzValue = `**▸ Score:** ${
+        res.records.blitz.score
+      } ${blitzRankB}\n**▸ PPS:** ${
+        Math.round((res.records.blitz.endcontext.piecesPlaced / 120) * 100) /
+        100
+      }\n**▸ Replay Link:**  : https://tetr.io/#R:${blitzShortId}\n*${getDate(
+        new Date(res.records.blitz.date)
+      )}*`;
+    }
 
     const embed = new Discord.MessageEmbed()
       .setColor(color)
