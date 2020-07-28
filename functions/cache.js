@@ -21,10 +21,11 @@ module.exports.user = async function getUser(id, type, callback) {
         user = res;
       })
       .catch((err) => {
+        console.log(err)
         user = null;
       });
   }
-
+  
   callback(user);
 };
 

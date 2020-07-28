@@ -19,7 +19,6 @@ client.once("ready", () => {
   console.log("Ready!");
 });
 
-
 client.on("message", (message) => {
   if (!message.content.startsWith(prefix) || message.author.bot) return;
 
@@ -51,7 +50,7 @@ client.on("message", (message) => {
   const now = Date.now();
   const timestamps = cooldowns.get(command.name);
   const cooldownAmount = (command.cooldown || 3) * 1000;
-message.guild.fetch
+  message.guild.fetch;
   if (timestamps.has(message.author.id)) {
     const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
 
